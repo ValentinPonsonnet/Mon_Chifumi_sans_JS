@@ -76,15 +76,112 @@ body {
 </div>
 <div id="rejouer"> <button type="button" class="bouton" onclick="Initialisation();">Rejouer</button> </div>
 <script>
-function Initialisation() {
-//Je ne me souvenais plus de la fonction Initialisation (Merci Google)
-document.getElementById("rejouer").style.display="none";
-document.getElementById("resultat-gauche").innerHTML="&nbsp;";
-//La seul chose que j'ai regardé sur celui que tu as fournie c'est "&nbsp;" car je l'avais pas en tête !
-document.getElementById("resultat-droite").innerHTML="&nbsp;";
+    function Initialisation() {
+        //Je ne me souvenais plus de la fonction Initialisation (Merci Google)
+        document.getElementById("rejouer").style.display="none";
+        document.getElementById("resultat-gauche").innerHTML="&nbsp;";
+        //La seul chose que j'ai regarder sur celui que tu as fournie c'est "&nbsp"
+        document.getElementById("resultat-droite").innerHTML="&nbsp;";
+        ResultatJeux = ["rien", "rien"];
+        //Je me suis trompé avec les guillements simple (') alors qu'il fallait les doubles (")
+        chifoumi = ["pierre", "ciseau", "feuille"];
+        document.getElementById('image-gauche').style.pointerEvents = 'auto';
+        document.getElementById('image-droite').style.pointerEvents = 'auto';
+        document.getElementById("gauche").style.backgroundColor=document.getElementById("droite").style.backgroundColor="#bbbbbb";
+        document.getElementById("titre").innerHTML="Chifoumi";
+        document.getElementById("image-gauche").style.backgroundImage=document.getElementById("image-droite").style.backgroundImage="url(images-pfc/depart.jpg)";
+    }
 
-}
+    function joueurGauche() {
+        var ChoixAleatoire = Math.floor(Math.random()*chifoumi.length);
+        ResultatJeux[0] = chifoumi[ChoixAleatoire];
+        //Je me souvenais plus de la variable et du résulat
+        document.getElementById("image-gauche").style.backgroundImage="url(images-pfc/"+chifoumi[ChoixAleatoire]+".jpg)";
+        document.getElementById("gauche").style.backgroundColor="black";
+        document.getElementById("resultat-gauche").innerHTML=chifoumi[ChoixAleatoire];
+        document.getElementById('image-gauche').style.pointerEvents = 'none';
+        checkGame();
+    }
 
+    function joueurDroite() {
+        var ChoixAleatoire = Math.floor(Math.random()*chifoumi.length);
+        ResultatJeux[1]=chifoumi[ChoixAleatoire];
+        document.getElementById("image-droite").style.backgroundImage="url(images-pfc/"+chifoumi[ChoixAleatoire]+".jpg)";
+        document.getElementById("droite").style.backgroundColor="black";
+        document.getElementById("resultat-droite").innerHTML=chifoumi[ChoixAleatoire];
+        document.getElementById('image-droite').style.pointerEvents = 'none';
+        checkGame();
+        //Pour le coup ici pas de soucis quand on a compris la précédente fonction
+    }
+
+    function checkGame() {
+        setTimeout(function () {
+            if (ResultatJeux[0] != 'rien' && ResultatJeux[1] != 'rien') {
+                //Ici je ne comprend pas pourquoi c'est surligner en jaune alors que c'est bon...
+                if (ResultatJeux[0] === ResultatJeux[1]) {
+                    document.getElementById("titre").innerHTML="Egalité, ça craint !!";
+                    document.getElementById("droite").style.backgroundColor=document.getElementById("gauche").style.backgroundColor="red";
+                    //Ici se sont les "If" dans les "if" qui m'ont posé un soucis
+                }
+
+                if (ResultatJeux[0] === 'ciseau' && ResultatJeux[1] === 'pierre') {
+                    document.getElementById("titre").innerHTML="La pierre défonce le ciseau";
+                    document.getElementById("gauche").style.backgroundColor="red";
+                    document.getElementById("droite").style.backgroundColor="green";
+                    document.getElementById("resultat-gauche").innerHTML="Perdu";
+                    document.getElementById("resultat-droite").innerHTML="Gagné";
+                    //Seul les innerHTML me pose problème
+                }
+
+                if (ResultatJeux[0] === 'ciseau' && ResultatJeux[1] === 'feuille') {
+                    document.getElementById("titre").innerHTML="Le ciseau coupe la feuille";
+                    document.getElementById("gauche").style.backgroundColor="green";
+                    document.getElementById("droite").style.backgroundColor="red";
+                    document.getElementById("resultat-gauche").innerHTML="Gagné";
+                    document.getElementById("resultat-droite").innerHTML="Perdu";
+                    //Seul les innerHTML me pose problème
+                }
+
+                if (ResultatJeux[0] === 'feuille' && ResultatJeux[1] === 'pierre') {
+                    document.getElementById("titre").innerHTML="La feuille enveloppe la pierre";
+                    document.getElementById("gauche").style.backgroundColor="green";
+                    document.getElementById("droite").style.backgroundColor="red";
+                    document.getElementById("resultat-gauche").innerHTML="Gagné";
+                    document.getElementById("resultat-droite").innerHTML="Perdu";
+                    //Seul les innerHTML me pose problème
+                }
+
+                if (ResultatJeux[0] === 'feuille' && ResultatJeux[1] === 'ciseau') {
+                    document.getElementById("titre").innerHTML="Le ciseau coupe la feuille";
+                    document.getElementById("gauche").style.backgroundColor="red";
+                    document.getElementById("droite").style.backgroundColor="green";
+                    document.getElementById("resultat-gauche").innerHTML="Perdu";
+                    document.getElementById("resultat-droite").innerHTML="Gagné";
+                    //Seul les innerHTML me pose problème
+                }
+
+                if (ResultatJeux[0] === 'pierre' && ResultatJeux[1] === 'feuille') {
+                    document.getElementById("titre").innerHTML="La feuille enveloppe la pierre";
+                    document.getElementById("gauche").style.backgroundColor="red";
+                    document.getElementById("droite").style.backgroundColor="green";
+                    document.getElementById("resultat-gauche").innerHTML="Perdu";
+                    document.getElementById("resultat-droite").innerHTML="Gagné";
+                    //Seul les innerHTML me pose problème
+                }
+
+                if (ResultatJeux[0] === 'pierre' && ResultatJeux[1] === 'ciseau') {
+                    document.getElementById("titre").innerHTML="La pierre défonce le ciseau";
+                    document.getElementById("gauche").style.backgroundColor="green";
+                    document.getElementById("droite").style.backgroundColor="red";
+                    document.getElementById("resultat-gauche").innerHTML="Gagné";
+                    document.getElementById("resultat-droite").innerHTML="Perdu";
+                    //Seul les innerHTML me pose problème
+                }
+
+                document.getElementById("rejouer").style.display="initial";
+            }
+            ;}, 1000);
+    }
 </script>
 </body>
 </html>
